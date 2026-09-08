@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hypothesisos"
+version = "0.1.0"
+description = "Epistemic reasoning layer for AI agents: investigate what you don't know instead of guessing."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.9"
+authors = [{ name = "HypothesisOS Contributors" }]
+keywords = ["agents", "epistemic", "reasoning", "llm", "tools"]
+dependencies = ["certifi"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+openrouter = ["requests"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
