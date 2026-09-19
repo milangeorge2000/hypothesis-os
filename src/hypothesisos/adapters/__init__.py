@@ -1,7 +1,7 @@
 """Framework adapters: use HypothesisOS without migrating your app."""
 from __future__ import annotations
 
-from typing as _t
+import typing as _t  # noqa: F401
 
 from ..controller import HypothesisOS
 
