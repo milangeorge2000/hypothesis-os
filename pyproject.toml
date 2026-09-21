@@ -16,6 +16,7 @@ dependencies = ["certifi"]
 [project.optional-dependencies]
 dev = ["pytest"]
 openrouter = ["requests"]
+langchain = ["langchain-core"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
