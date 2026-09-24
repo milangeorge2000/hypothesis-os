@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List
 
 from .core.types import Observation
+from .providers import OpenRouterModel  # noqa: F401  (back-compat re-export)
 
 
 @dataclass
@@ -104,3 +105,6 @@ class HTTPTool(Tool):
                 content=f"TOOL_ERROR {self.name}: {exc}", source=self.name,
                 reliability=0.5,
             )
+
+
+  # NOTE: OpenRouterModel lives in hypothesisos.providers (re-exported above).

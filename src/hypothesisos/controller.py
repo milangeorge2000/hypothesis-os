@@ -31,6 +31,18 @@ class HypothesisOS:
         self.min_gain = min_gain
         self.n_hypotheses = n_hypotheses
 
+    @classmethod
+    def from_env(cls, tools: Optional[List[Tool]] = None, provider: Optional[str] = None,
+                 **kwargs) -> "HypothesisOS":
+        """Build an investigator with the model auto-detected from env vars.
+
+        Reads OPENAI_API_KEY / ANTHROPIC_API_KEY / GEMINI_API_KEY /
+        GROQ_API_KEY / OPENROUTER_API_KEY / OLLAMA_HOST. Falls back to the
+        offline heuristic model when no key is set.
+        """
+        from .providers import create_model
+        return cls(model=create_model(provider), tools=tools, **kwargs)
+
     # -- main entry -----------------------------------------------------
     def investigate(self, question: str, context: str = "",
                     tools: Optional[List[Tool]] = None) -> EvidenceBundle:
