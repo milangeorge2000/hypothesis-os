@@ -135,6 +135,33 @@ out = safe_agent("Revenue is down 27%. Why?")
 bundle = investigator.investigate(question, context=context, tools=extra_tools)
 ```
 
+### LangChain (`pip install hypothesisos[langchain]`)
+
+Both directions, no migration. Your existing LangChain tools become
+HypothesisOS experiments:
+
+```python
+from hypothesisos.adapters.langchain import langchain_tools_to_hypothesisos
+
+investigator = HypothesisOS(
+    model=model,
+    tools=langchain_tools_to_hypothesisos(lc_tools,
+                                          costs={"check_watermark": 0.2}),
+)
+```
+
+Or the investigator becomes one tool inside your LangChain agent, so it
+pauses to gather evidence before acting:
+
+```python
+from hypothesisos.adapters.langchain import investigator_as_langchain_tool
+
+agent = create_react_agent(model, [investigator_as_langchain_tool(investigator)])
+```
+
+Only `langchain-core` is required, and only when these helpers are called —
+the core package stays dependency-free.
+
 ## API reference
 
 **`HypothesisOS(model, tools, max_experiments=4, confidence_threshold=0.75, min_gain=0.15, n_hypotheses=4)`**
@@ -191,7 +218,7 @@ src/hypothesisos/
   providers.py       OpenAI, Anthropic, Gemini, Groq, OpenRouter, Ollama, create_model
   tools.py           Tool, FunctionTool, SQLTool, HTTPTool
   engines/           hypothesis generation, experiment planning + ranking, belief update
-  adapters/          wrap_agent(), langgraph_node()
+  adapters/          wrap_agent(), langgraph_node(), langchain.py
 examples/            demo.py, sim_analytics.py, sim_ops.py, live_eval.py
 tests/               test_core.py, test_providers.py, test_live.py (opt-in)
 ```
