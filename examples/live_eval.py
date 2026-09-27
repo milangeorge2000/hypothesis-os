@@ -54,7 +54,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--worlds", default="",
                     help="comma list like etl_failure,demand_drop (default: all)")
-    ap.add_argument("--model", default="nvidia/nemotron-3-super-120b-a12b:free")
+    ap.add_argument("--model", default=os.getenv(
+        "HYPOTHESISOS_MODEL", "nvidia/nemotron-3-super-120b-a12b:free"))
     ap.add_argument("--max-exp", type=int, default=4)
     args = ap.parse_args()
 
